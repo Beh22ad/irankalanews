@@ -2,136 +2,385 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
     <title>مستندات API قیمت آهن</title>
     <link rel="stylesheet" href="/assets/fonts/stylesheet.css">
     <style>
-        :root {
-            --primary: #0d9488;
-            --primary-dark: #0f766e;
-            --primary-darker: #134e4a;
-            --bg: #f8faf9;
-            --bg-card: #ffffff;
-            --text: #1a2e2a;
-            --text-muted: #5f7a75;
-            --border: #d1ddd9;
-            --code-bg: #1e293b;
-            --code-text: #e2e8f0;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: 'Vazirmatn', sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            font-family: 'Vazirmatn', 'Segoe UI', system-ui, sans-serif;
+            background: #f8faf9;
+            color: #1a2e2a;
             line-height: 1.8;
+            padding: 12px;
         }
-        .container {  margin: 0 auto; }
-        main.site-main {
-            padding: 20px;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 4px;
         }
-        h1 { font-size: 1.8rem; color: var(--primary-darker); margin-bottom: 10px; border-bottom: 3px solid var(--primary); padding-bottom: 10px; display: inline-block; }
-        h2 { font-size: 1.3rem; color: var(--primary-dark); margin: 30px 0 15px; display: flex; align-items: center; gap: 8px; }
-        h2::before { content: ''; display: inline-block; width: 6px; height: 24px; background: var(--primary); border-radius: 3px; }
-        p { margin-bottom: 15px; color: #334e48; }
-        
+
+        h1 {
+            font-size: 1.8rem;
+            color: #134e4a;
+            border-bottom: 3px solid #0d9488;
+            padding-bottom: 8px;
+            display: inline-block;
+            margin-bottom: 12px;
+            word-break: break-word;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: #0f766e;
+            margin: 28px 0 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background: #0d9488;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        p {
+            margin-bottom: 14px;
+            color: #2d4a44;
+            word-break: break-word;
+        }
+
         .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 24px;
+            background: #ffffff;
+            border: 1px solid #d1ddd9;
+            border-radius: 12px;
+            padding: 18px 16px;
             margin-bottom: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
         }
 
         .endpoint {
-            background: var(--primary-darker);
+            background: #134e4a;
             color: #fff;
-            padding: 16px 20px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 1rem;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
             direction: ltr;
             text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 12px;
+            gap: 10px 14px;
+            word-break: break-all;
         }
+
         .method {
             background: #16a34a;
             color: #fff;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.85rem;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
         }
 
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
-        th, td { padding: 12px 16px; text-align: right; border: 1px solid var(--border); }
-        th { background: #f0f5f3; color: var(--primary-darker); font-weight: 700; }
-        tr:nth-child(even) { background: #fcfdfc; }
-        
+        /* ----- table mobile friendly ----- */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 12px 0 8px;
+            border-radius: 10px;
+            border: 1px solid #d1ddd9;
+        }
+
+        .table-responsive table {
+            width: 100%;
+            min-width: 560px;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .table-responsive th,
+        .table-responsive td {
+            padding: 10px 14px;
+            text-align: right;
+            border: 1px solid #d1ddd9;
+            white-space: nowrap;
+        }
+
+        .table-responsive th {
+            background: #f0f5f3;
+            color: #134e4a;
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        .table-responsive tr:nth-child(even) {
+            background: #fcfdfc;
+        }
+
+        /* ----- table wrapper for product ids (tall) ----- */
+        .table-wrapper {
+            border: 1px solid #d1ddd9;
+            border-radius: 10px;
+            overflow: scroll;
+            margin: 14px 0 6px;
+            max-height: 800px;
+        }
+
+        .table-wrapper .table-responsive {
+            border: none;
+            border-radius: 0;
+            margin: 0;
+        }
+
+        .table-wrapper .table-responsive table {
+            min-width: 480px;
+        }
+
+        .table-wrapper .table-responsive th {
+            position: sticky;
+            top: 0;
+            z-index: 3;
+        }
+
         .badge {
             display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
             font-weight: 600;
+            white-space: nowrap;
         }
-        .badge-free { background: #dcfce7; color: #166534; }
-        .badge-paid { background: #fef3c7; color: #92400e; }
+
+        .badge-free {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-paid {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: #eef2f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            word-break: break-word;
+        }
 
         pre {
-            background: var(--code-bg);
-            color: var(--code-text);
-            padding: 20px;
-            border-radius: 8px;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 18px 16px;
+            border-radius: 10px;
             overflow-x: auto;
-            font-size: 0.88rem;
+            -webkit-overflow-scrolling: touch;
+            font-size: 0.8rem;
             direction: ltr;
             text-align: left;
             line-height: 1.6;
-            margin: 15px 0;
+            margin: 14px 0;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
-        code { font-family: 'Consolas', 'Monaco', monospace; }
-        
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 0.8rem;
+        }
+
         .note {
             background: #fffbeb;
             border-right: 4px solid #f59e0b;
             padding: 14px 18px;
-            border-radius: 6px;
-            margin: 15px 0;
+            border-radius: 8px;
+            margin: 16px 0;
             font-size: 0.9rem;
             color: #92400e;
         }
+
         .note-info {
             background: #f0f9ff;
             border-right: 4px solid #3b82f6;
             padding: 14px 18px;
-            border-radius: 6px;
-            margin: 15px 0;
+            border-radius: 8px;
+            margin: 16px 0;
             font-size: 0.9rem;
             color: #1e3a8a;
         }
-        .note strong { display: block; margin-bottom: 4px; }
 
-        .table-wrapper { max-height: 400px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; }
-        .table-wrapper table { margin: 0; }
-        .table-wrapper th { position: sticky; top: 0; z-index: 1; }
+        .note strong {
+            display: block;
+            margin-bottom: 4px;
+        }
 
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            .endpoint { font-size: 0.85rem; flex-direction: column; align-items: flex-start; gap: 8px; }
-            th, td { padding: 8px 10px; font-size: 0.85rem; }
+        /* tabs for code samples */
+        .code-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 4px;
+            margin: 18px 0 0;
+            border-bottom: 1px solid #d1ddd9;
+            padding-bottom: 6px;
+        }
+
+        .code-tab-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 14px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #5f7a75;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        .code-tab-btn.active {
+            background: #0d9488;
+            color: #fff;
+        }
+
+        .code-tab-btn:hover {
+            background: #d1ddd9;
+        }
+
+        .code-tab-content {
+            display: none;
+            margin-top: 6px;
+        }
+
+        .code-tab-content.active {
+            display: block;
+        }
+
+        /* small screens */
+        @media (max-width: 640px) {
+            body {
+                padding: 6px;
+            }
+
+            .card {
+                padding: 14px 10px;
+                border-radius: 10px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+                margin-top: 22px;
+            }
+
+            .endpoint {
+                font-size: 0.8rem;
+                padding: 12px 14px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .table-responsive table {
+                font-size: 0.8rem;
+                min-width: 460px;
+            }
+
+            .table-responsive th,
+            .table-responsive td {
+                padding: 6px 10px;
+                white-space: nowrap;
+            }
+
+            .table-wrapper .table-responsive table {
+                min-width: 400px;
+            }
+
+            pre {
+                font-size: 0.7rem;
+                padding: 14px 12px;
+            }
+
+            pre code {
+                font-size: 0.7rem;
+            }
+
+            .code-tab-btn {
+                font-size: 0.75rem;
+                padding: 4px 12px;
+            }
+
+            .badge {
+                font-size: 0.6rem;
+                padding: 1px 8px;
+            }
+
+            .note,
+            .note-info {
+                padding: 12px 14px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .table-responsive table {
+                min-width: 380px;
+                font-size: 0.75rem;
+            }
+
+            .table-responsive th,
+            .table-responsive td {
+                padding: 5px 8px;
+            }
+
+            .table-wrapper .table-responsive table {
+                min-width: 320px;
+            }
+
+            .endpoint {
+                font-size: 0.7rem;
+            }
+
+            pre {
+                font-size: 0.65rem;
+                padding: 10px 8px;
+            }
         }
     </style>
 </head>
 <body>
-
 <div class="container">
     <h1>مستندات فنی API قیمت آهن</h1>
     <p>با استفاده از این سرویس، می‌توانید به صورت لحظه‌ای و برنامه‌نویسی‌شده، آخرین قیمت <strong>انواع سایزها و مشخصات مختلف</strong> مقاطع فولادی، لوله، ورق و سایر آهن‌آلات را دریافت کنید.</p>
-    
+
     <div class="note">
         <strong>💡 نکته مهم:</strong>
         با هر بار فراخوانی این API برای یک دسته‌بندی خاص، شما <strong>لیست کامل تمامی سایزهای موجود</strong> در آن دسته را به همراه جزئیات قیمت هر سایز به صورت یکجا دریافت خواهید کرد و نیازی به درخواست جداگانه برای هر سایز نیست.
@@ -142,7 +391,7 @@
         <h2>آدرس درخواست (Endpoint)</h2>
         <div class="endpoint">
             <span class="method">GET</span>
-            <span>https://irankalanews.ir/ahan/?id=PRODUCT_ID&auth=YOUR_API_KEY</span>
+            <span>https://irankalanews.ir/ahan/?id=PRODUCT_ID&amp;auth=YOUR_API_KEY</span>
         </div>
         <div class="note">
             <strong>⚠️ نکته امنیتی:</strong>
@@ -153,80 +402,84 @@
     <!-- Parameters -->
     <div class="card">
         <h2>پارامترهای درخواست</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 20%;">نام پارامتر</th>
-                    <th style="width: 15%;">نوع</th>
-                    <th style="width: 15%;">الزامی</th>
-                    <th>توضیحات</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>id</code></td>
-                    <td>string</td>
-                    <td>بله</td>
-                    <td>شناسه دسته‌بندی محصول (مثال: <code>looleh-steel</code>). لیست کامل در پایین صفحه موجود است.</td>
-                </tr>
-                <tr>
-                    <td><code>auth</code></td>
-                    <td>string</td>
-                    <td>خیر*</td>
-                    <td>کلید API اختصاصی شما. <br><span class="badge badge-free">رایگان</span> برای دسته‌های رایگان الزامی نیست، اما برای داده‌های پریمیوم <span class="badge badge-paid">الزامی</span> است.</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 22%;">نام پارامتر</th>
+                        <th style="width: 15%;">نوع</th>
+                        <th style="width: 16%;">الزامی</th>
+                        <th>توضیحات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>id</code></td>
+                        <td>string</td>
+                        <td>بله</td>
+                        <td>شناسه دسته‌بندی محصول (مثال: <code>looleh-steel</code>). لیست کامل در پایین صفحه موجود است.</td>
+                    </tr>
+                    <tr>
+                        <td><code>auth</code></td>
+                        <td>string</td>
+                        <td>خیر*</td>
+                        <td>کلید API اختصاصی شما. <br><span class="badge badge-free">رایگان</span> برای دسته‌های رایگان الزامی نیست، اما برای داده‌های پریمیوم <span class="badge badge-paid">الزامی</span> است.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Response -->
     <div class="card">
         <h2>ساختار پاسخ (Response)</h2>
         <p>در صورت موفقیت‌آمیز بودن درخواست، سرور یک شیء JSON باز می‌گرداند که آرایه <code>data</code> آن شامل <strong>لیست تمام سایزهای محصول</strong> به همراه اطلاعات زیر است:</p>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 25%;">فیلد (داخل آرایه data)</th>
-                    <th style="width: 15%;">نوع</th>
-                    <th>توضیحات دقیق</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>id</code></td>
-                    <td>string</td>
-                    <td><strong>شناسه منحصر‌به‌فرد هر سایز</strong> (مثال: <code>looleh-steel_3734413042</code>). برای شناسایی دقیق همان سایز در سیستم خود از این مقدار استفاده کنید.</td>
-                </tr>
-                <tr>
-                    <td><code>نام</code></td>
-                    <td>string</td>
-                    <td>نام دقیق محصول به همراه <strong>سایز، رده و مشخصات فنی</strong> (مثال: لوله استنلس استیل صنعتی 316 2 اینچ رده 40)</td>
-                </tr>
-                <tr>
-                    <td><code>قیمت</code></td>
-                    <td>string</td>
-                    <td>آخرین <strong>قیمت</strong> ثبت شده برای آن سایز خاص (به تومان)</td>
-                </tr>
-                <tr>
-                    <td><code>تاریخ آخرین قیمت</code></td>
-                    <td>string</td>
-                    <td>تاریخ شمسی دقیق <strong>بروزرسانی قیمت</strong> (مثال: 1403-05-10)</td>
-                </tr>
-                <tr>
-                    <td><code>24h</code></td>
-                    <td>string</td>
-                    <td>میزان <strong>تغییر قیمت در ۲۴ ساعت گذشته</strong> (نشان‌دهنده نوسان اخیر بازار برای آن سایز خاص)</td>
-                </tr>
-            </tbody>
-        </table>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">فیلد (داخل آرایه data)</th>
+                        <th style="width: 15%;">نوع</th>
+                        <th>توضیحات دقیق</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>id</code></td>
+                        <td>string</td>
+                        <td><strong>شناسه منحصر‌به‌فرد هر سایز</strong> (مثال: <code>looleh-steel_3734413042</code>). برای شناسایی دقیق همان سایز در سیستم خود از این مقدار استفاده کنید.</td>
+                    </tr>
+                    <tr>
+                        <td><code>نام</code></td>
+                        <td>string</td>
+                        <td>نام دقیق محصول به همراه <strong>سایز، رده و مشخصات فنی</strong> (مثال: لوله استنلس استیل صنعتی 316 2 اینچ رده 40)</td>
+                    </tr>
+                    <tr>
+                        <td><code>قیمت</code></td>
+                        <td>string</td>
+                        <td>آخرین <strong>قیمت</strong> ثبت شده برای آن سایز خاص (به تومان)</td>
+                    </tr>
+                    <tr>
+                        <td><code>تاریخ آخرین قیمت</code></td>
+                        <td>string</td>
+                        <td>تاریخ شمسی دقیق <strong>بروزرسانی قیمت</strong> (مثال: 1403-05-10)</td>
+                    </tr>
+                    <tr>
+                        <td><code>24h</code></td>
+                        <td>string</td>
+                        <td>میزان <strong>تغییر قیمت در ۲۴ ساعت گذشته</strong> (نشان‌دهنده نوسان اخیر بازار برای آن سایز خاص)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div class="note-info">
             <strong>💡 نکته کلیدی درباره شناسه (ID) سایزها:</strong>
             همان‌طور که در نمونه JSON زیر مشاهده می‌کنید، هر ردیف (سایز خاص) دارای یک فیلد <code>id</code> منحصر‌به‌فرد است. شما می‌توانید در کد نویسی خود، آرایه دریافتی را پیمایش کرده و با چک کردن این <code>id</code>، قیمت و مشخصات دقیق <strong>همان سایز خاص</strong> را استخراج و در دیتابیس یا سیستم خود مدیریت کنید.
         </div>
 
-        <h3 style="font-size: 1rem; margin-top: 20px; color: var(--text-muted);">نمونه پاسخ JSON:</h3>
+        <h3 style="font-size: 1rem; margin-top: 20px; color: #5f7a75;">نمونه پاسخ JSON:</h3>
         <pre><code>{
   "data": [
     {
@@ -249,15 +502,13 @@
 }</code></pre>
     </div>
 
-
-    <!-- Code Examples with Tabs -->
+    <!-- Code Examples -->
     <div class="card">
         <h2>نمونه کد درخواست</h2>
-        <p class="text-muted" style="margin-bottom:16px;">
+        <p style="margin-bottom:16px;">
             در این مثال‌ها، نحوه دریافت لیست سایزها و استخراج اطلاعات یک سایز خاص با استفاده از <code>id</code> منحصر‌به‌فرد آن نشان داده شده است.
         </p>
 
-        <!-- Tabs Navigation -->
         <div class="code-tabs">
             <button class="code-tab-btn active" data-tab="php">PHP</button>
             <button class="code-tab-btn" data-tab="nodejs">Node.js</button>
@@ -265,7 +516,6 @@
             <button class="code-tab-btn" data-tab="python">Python</button>
         </div>
 
-        <!-- Tab 1: PHP -->
         <div class="code-tab-content active" id="tab-php">
             <pre><code>&lt;?php
 $productId = 'looleh-steel';
@@ -296,7 +546,6 @@ if (!isset($data['status']) || $data['status'] !== 'ok') {
     die('API Error: ' . ($data['message'] ?? 'Unknown error'));
 }
 
-// ID of the size you want
 $targetId = 'looleh-steel_3734413042';
 $foundItem = null;
 
@@ -318,7 +567,6 @@ echo "تاریخ بروزرسانی: " . ($foundItem['تاریخ اخرین قی
 ?&gt;</code></pre>
         </div>
 
-        <!-- Tab 2: Node.js -->
         <div class="code-tab-content" id="tab-nodejs">
             <pre><code>const productId = 'looleh-steel';
 const apiKey = 'YOUR_API_KEY_HERE';
@@ -360,14 +608,12 @@ async function main() {
 main();</code></pre>
         </div>
 
-        <!-- Tab 3: cURL -->
         <div class="code-tab-content" id="tab-curl">
             <pre><code>curl -L \
   -A "MyApp/1.0" \
   "https://irankalanews.ir/ahan/?id=looleh-steel&auth=YOUR_API_KEY_HERE"</code></pre>
         </div>
 
-        <!-- Tab 4: Python -->
         <div class="code-tab-content" id="tab-python">
             <pre><code>import requests
 import json
@@ -384,7 +630,7 @@ headers = {
 
 try:
     response = requests.get(url, headers=headers, timeout=10)
-    response.raise_for_status()  # Raise an exception for HTTP errors
+    response.raise_for_status()
     
     data = response.json()
     
@@ -395,13 +641,11 @@ except json.JSONDecodeError as e:
     print(f"Invalid JSON: {e}")
     sys.exit(1)
 
-# Check API status
 if not data.get('status') or data['status'] != 'ok':
     error_msg = data.get('message', 'Unknown error')
     print(f"API Error: {error_msg}")
     sys.exit(1)
 
-# ID of the size you want
 target_id = 'looleh-steel_3734413042'
 found_item = None
 
@@ -414,7 +658,6 @@ if found_item is None:
     print('سایز مورد نظر یافت نشد.')
     sys.exit(1)
 
-# Print the results
 print(f"سایز: {found_item.get('نام', '-')}")
 print(f"قیمت: {found_item.get('قیمت', '-')} تومان")
 print(f"تغییر ۲۴ ساعته: {found_item.get('24h', '-')}")
@@ -422,159 +665,205 @@ print(f"تاریخ بروزرسانی: {found_item.get('تاریخ اخرین ق
         </div>
     </div>
 
-    
     <!-- Product IDs Table -->
     <div class="card">
         <h2>لیست شناسه‌های محصولات (Product IDs)</h2>
         <p>برای دریافت داده‌های هر دسته، مقدار ستون <strong>شناسه</strong> را در پارامتر <code>id</code> قرار دهید. دسته‌هایی که برچسب <span class="badge badge-free">رایگان</span> دارند، بدون نیاز به پارامتر <code>auth</code> قابل دسترسی هستند.</p>
-        
+
         <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 60%;">نام دسته‌بندی</th>
-                        <th style="width: 40%;">شناسه (Product Code)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>بست داربست <span class="badge badge-free">رایگان</span></td><td><code>bast-darbast</code></td></tr>
-                    <tr><td>فلنج گلودار <span class="badge badge-free">رایگان</span></td><td><code>felenj-geludar</code></td></tr>
-                    <tr><td>کپ <span class="badge badge-free">رایگان</span></td><td><code>gap</code></td></tr>
-                    <tr><td>گل میخ عرشه فولادی <span class="badge badge-free">رایگان</span></td><td><code>gol-mikh-arsheh-fooladi</code></td></tr>
-                    <tr><td>گریتینگ <span class="badge badge-free">رایگان</span></td><td><code>griting</code></td></tr>
-                    <tr><td>لوله گوشتدار <span class="badge badge-free">رایگان</span></td><td><code>looleh-gooshtdar</code></td></tr>
-                    <tr><td>لوله استیل صنایع غذایی <span class="badge badge-free">رایگان</span></td><td><code>looleh-steel-sanaye-ghazayi</code></td></tr>
-                    <tr><td>لوله استیل <span class="badge badge-free">رایگان</span></td><td><code>looleh-steel</code></td></tr>
-                    <tr><td>مش <span class="badge badge-free">رایگان</span></td><td><code>mesh</code></td></tr>
-                    <tr><td>میلگرد بستر <span class="badge badge-free">رایگان</span></td><td><code>milgerd-bastar</code></td></tr>
-                    <tr><td>میلگرد حرارتی <span class="badge badge-free">رایگان</span></td><td><code>milgerd-hararati</code></td></tr>
-                    <tr><td>نبشی <span class="badge badge-free">رایگان</span></td><td><code>nabshi</code></td></tr>
-                    <tr><td>پروفیل کنگره <span class="badge badge-free">رایگان</span></td><td><code>profil-kongereh</code></td></tr>
-                    <tr><td>پروفیل استیل <span class="badge badge-free">رایگان</span></td><td><code>profil-steel</code></td></tr>
-                    <tr><td>پروفیل زد <span class="badge badge-free">رایگان</span></td><td><code>profil-z</code></td></tr>
-                    <tr><td>ریل آسانسوری <span class="badge badge-free">رایگان</span></td><td><code>rail-asansor</code></td></tr>
-                    <tr><td>ریل جرثقیلی <span class="badge badge-free">رایگان</span></td><td><code>rail-jaresaghil</code></td></tr>
-                    <tr><td>ریل معدنی <span class="badge badge-free">رایگان</span></td><td><code>rail-madani</code></td></tr>
-                    <tr><td>صفحه سنگ <span class="badge badge-free">رایگان</span></td><td><code>safhe-sang</code></td></tr>
-                    <tr><td>ساندویچ پانل <span class="badge badge-free">رایگان</span></td><td><code>sandwich-patel</code></td></tr>
-                    <tr><td>سردنده <span class="badge badge-free">رایگان</span></td><td><code>sardandeh</code></td></tr>
-                    <tr><td>سپری آهن <span class="badge badge-free">رایگان</span></td><td><code>separi-ahan</code></td></tr>
-                    <tr><td>سه راه <span class="badge badge-free">رایگان</span></td><td><code>serah</code></td></tr>
-                    <tr><td>شمش قلع <span class="badge badge-free">رایگان</span></td><td><code>shemsh-ghal</code></td></tr>
-                    <tr><td>سیم آرماتوربندی <span class="badge badge-free">رایگان</span></td><td><code>sim-armatorbandi</code></td></tr>
-                    <tr><td>سیم خاردار سوزنی <span class="badge badge-free">رایگان</span></td><td><code>sim-khardar-soozani</code></td></tr>
-                    <tr><td>سیم خاردار تبری <span class="badge badge-free">رایگان</span></td><td><code>sim-khardar-tabari</code></td></tr>
-                    <tr><td>سیم خاردار <span class="badge badge-free">رایگان</span></td><td><code>sim-khardar</code></td></tr>
-                    <tr><td>سیم مفتول <span class="badge badge-free">رایگان</span></td><td><code>sim-maftool</code></td></tr>
-                    <tr><td>سیم جوش <span class="badge badge-free">رایگان</span></td><td><code>simjoosh</code></td></tr>
-                    <tr><td>تبدیل <span class="badge badge-free">رایگان</span></td><td><code>tabdil</code></td></tr>
-                    <tr><td>تیرآهن لانه زنبوری <span class="badge badge-free">رایگان</span></td><td><code>tirahan-laneh-zanboori</code></td></tr>
-                    <tr><td>توری مرغی 120 <span class="badge badge-free">رایگان</span></td><td><code>toori-morghi-pressi</code></td></tr>
-                    <tr><td>ورق آلوزینک <span class="badge badge-free">رایگان</span></td><td><code>varagh-aluzink</code></td></tr>
-                    <tr><td>ورق گالوالوم <span class="badge badge-free">رایگان</span></td><td><code>varagh-galvalum</code></td></tr>
-                    <tr><td>ورق کرکره رنگی <span class="badge badge-free">رایگان</span></td><td><code>varagh-kerkereh-rangi</code></td></tr>
-                    <tr><td>ورق کرکره <span class="badge badge-free">رایگان</span></td><td><code>varagh-kerkereh</code></td></tr>
-                    <tr><td>ورق سربی <span class="badge badge-free">رایگان</span></td><td><code>varagh-sorbi</code></td></tr>
-                    <tr><td>ورق استیل <span class="badge badge-free">رایگان</span></td><td><code>varagh-steel</code></td></tr>
-                    <tr><td>وال پست <span class="badge badge-free">رایگان</span></td><td><code>wal-post</code></td></tr>
-                    <tr><td>عرشه فولادی</td><td><code>arsheh-fooladi</code></td></tr>
-                    <tr><td>بوشن</td><td><code>booshen</code></td></tr>
-                    <tr><td>چهار پهلو آهنی</td><td><code>chahar-pahloo-ahani</code></td></tr>
-                    <tr><td>الکترود</td><td><code>electrod</code></td></tr>
-                    <tr><td>فنس</td><td><code>fence</code></td></tr>
-                    <tr><td>لرزه گیر</td><td><code>larzeh-gir</code></td></tr>
-                    <tr><td>لوله API</td><td><code>looleh-api</code></td></tr>
-                    <tr><td>لوله داربست</td><td><code>looleh-darbast</code></td></tr>
-                    <tr><td>لوله درزدار</td><td><code>looleh-darzdar</code></td></tr>
-                    <tr><td>لوله گالوانیزه گلخانه</td><td><code>looleh-galvazizeh-golkhaneh</code></td></tr>
-                    <tr><td>لوله گالوانیزه</td><td><code>looleh-garvanizeh</code></td></tr>
-                    <tr><td>لوله گاز</td><td><code>looleh-gaz</code></td></tr>
-                    <tr><td>لوله جدار چاه</td><td><code>looleh-jedar-chah</code></td></tr>
-                    <tr><td>لوله مانیسمان</td><td><code>looleh-manisman</code></td></tr>
-                    <tr><td>لوله مسی</td><td><code>looleh-mesi</code></td></tr>
-                    <tr><td>لوله صنعتی</td><td><code>looleh-sanati</code></td></tr>
-                    <tr><td>لوله اسپیرال</td><td><code>looleh-spiral</code></td></tr>
-                    <tr><td>لوله استیل دکوراتیو</td><td><code>looleh-steel-decorative</code></td></tr>
-                    <tr><td>لوله استیل صنعتی</td><td><code>looleh-steel-sanati</code></td></tr>
-                    <tr><td>لوله تست آب</td><td><code>looleh-test-ab</code></td></tr>
-                    <tr><td>میلگرد آجدار</td><td><code>milgerd-ajdar</code></td></tr>
-                    <tr><td>میلگرد ساده</td><td><code>milgerd-sadeh</code></td></tr>
-                    <tr><td>میلگرد st37</td><td><code>milgerd-st37</code></td></tr>
-                    <tr><td>میلگرد استیل</td><td><code>milgerd-steel</code></td></tr>
-                    <tr><td>ناودانی</td><td><code>navdooni</code></td></tr>
-                    <tr><td>پروفیل آلومینیوم</td><td><code>profil-alminiyom</code></td></tr>
-                    <tr><td>پروفیل گالوانیزه</td><td><code>profil-galvanizeh</code></td></tr>
-                    <tr><td>پروفیل سبک</td><td><code>profil-sabok</code></td></tr>
-                    <tr><td>پروفیل ساختمانی</td><td><code>profil-sakhtemani</code></td></tr>
-                    <tr><td>پروفیل صنعتی</td><td><code>profil-sanati</code></td></tr>
-                    <tr><td>رابیتس</td><td><code>rabits</code></td></tr>
-                    <tr><td>ریل قطار</td><td><code>rail-ghatar</code></td></tr>
-                    <tr><td>شفت آهنی</td><td><code>shafte-ahani</code></td></tr>
-                    <tr><td>تخته روسی</td><td><code>takhteh-roosi</code></td></tr>
-                    <tr><td>تسمه آهنی</td><td><code>tasmeh-ahani</code></td></tr>
-                    <tr><td>تسمه مسی</td><td><code>tasmeh-mesi</code></td></tr>
-                    <tr><td>تیرآهن هاش</td><td><code>tirahan-hush</code></td></tr>
-                    <tr><td>تیرآهن</td><td><code>tirahan</code></td></tr>
-                    <tr><td>توری حصاری</td><td><code>toori-hesari</code></td></tr>
-                    <tr><td>توری پرسی</td><td><code>toori-pressi</code></td></tr>
-                    <tr><td>ورق آلومینیوم آجدار</td><td><code>varagh-alminiyom-ajdar</code></td></tr>
-                    <tr><td>ورق آلومینیوم</td><td><code>varagh-alminiyom</code></td></tr>
-                    <tr><td>ورق گالوانیزه</td><td><code>varagh-galvanizeh</code></td></tr>
-                    <tr><td>ورق قلع اندود</td><td><code>varagh-ghalandood</code></td></tr>
-                    <tr><td>ورق مسی</td><td><code>varagh-mesi</code></td></tr>
-                    <tr><td>ورق رنگی الکترواستاتیک</td><td><code>varagh-rang-electrostatic</code></td></tr>
-                    <tr><td>ورق رنگی</td><td><code>varagh-rangi</code></td></tr>
-                    <tr><td>ورق روغنی</td><td><code>varagh-roghani</code></td></tr>
-                    <tr><td>ورق استیل دکوراتیو</td><td><code>varagh-steel-decorative</code></td></tr>
-                    <tr><td>ورق استیل صنعتی</td><td><code>varagh-steel-sanati</code></td></tr>
-                    <tr><td>زانو</td><td><code>zanoo</code></td></tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 58%;">نام دسته‌بندی</th>
+                            <th style="width: 42%;">شناسه (Product Code)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>بست داربست <span class="badge badge-free">رایگان</span></td><td><code>bast-darbast</code></td></tr>
+                        <tr><td>فلنج گلودار <span class="badge badge-free">رایگان</span></td><td><code>felenj-geludar</code></td></tr>
+                        <tr><td>کپ <span class="badge badge-free">رایگان</span></td><td><code>gap</code></td></tr>
+                        <tr><td>گل میخ عرشه فولادی <span class="badge badge-free">رایگان</span></td><td><code>gol-mikh-arsheh-fooladi</code></td></tr>
+                        <tr><td>گریتینگ <span class="badge badge-free">رایگان</span></td><td><code>griting</code></td></tr>
+                        <tr><td>لوله گوشتدار <span class="badge badge-free">رایگان</span></td><td><code>looleh-gooshtdar</code></td></tr>
+                        <tr><td>لوله استیل صنایع غذایی <span class="badge badge-free">رایگان</span></td><td><code>looleh-steel-sanaye-ghazayi</code></td></tr>
+                        <tr><td>لوله استیل <span class="badge badge-free">رایگان</span></td><td><code>looleh-steel</code></td></tr>
+                        <tr><td>مش <span class="badge badge-free">رایگان</span></td><td><code>mesh</code></td></tr>
+                        <tr><td>میلگرد بستر <span class="badge badge-free">رایگان</span></td><td><code>milgerd-bastar</code></td></tr>
+                        <tr><td>میلگرد حرارتی <span class="badge badge-free">رایگان</span></td><td><code>milgerd-hararati</code></td></tr>
+                        <tr><td>نبشی <span class="badge badge-free">رایگان</span></td><td><code>nabshi</code></td></tr>
+                        <tr><td>پروفیل کنگره <span class="badge badge-free">رایگان</span></td><td><code>profil-kongereh</code></td></tr>
+                        <tr><td>پروفیل استیل <span class="badge badge-free">رایگان</span></td><td><code>profil-steel</code></td></tr>
+                        <tr><td>پروفیل زد <span class="badge badge-free">رایگان</span></td><td><code>profil-z</code></td></tr>
+                        <tr><td>ریل آسانسوری <span class="badge badge-free">رایگان</span></td><td><code>rail-asansor</code></td></tr>
+                        <tr><td>ریل جرثقیلی <span class="badge badge-free">رایگان</span></td><td><code>rail-jaresaghil</code></td></tr>
+                        <tr><td>ریل معدنی <span class="badge badge-free">رایگان</span></td><td><code>rail-madani</code></td></tr>
+                        <tr><td>صفحه سنگ <span class="badge badge-free">رایگان</span></td><td><code>safhe-sang</code></td></tr>
+                        <tr><td>ساندویچ پانل <span class="badge badge-free">رایگان</span></td><td><code>sandwich-patel</code></td></tr>
+                        <tr><td>سردنده <span class="badge badge-free">رایگان</span></td><td><code>sardandeh</code></td></tr>
+                        <tr><td>سپری آهن <span class="badge badge-free">رایگان</span></td><td><code>separi-ahan</code></td></tr>
+                        <tr><td>سه راه <span class="badge badge-free">رایگان</span></td><td><code>serah</code></td></tr>
+                        <tr><td>شمش قلع <span class="badge badge-free">رایگان</span></td><td><code>shemsh-ghal</code></td></tr>
+                        <tr><td>سیم آرماتوربندی <span class="badge badge-free">رایگان</span></td><td><code>sim-armatorbandi</code></td></tr>
+                        <tr><td>سیم خاردار سوزنی <span class="badge badge-free">رایگان</span></td><td><code>sim-khardar-soozani</code></td></tr>
+                        <tr><td>سیم خاردار تبری <span class="badge badge-free">رایگان</span></td><td><code>sim-khardar-tabari</code></td></tr>
+                        <tr><td>سیم خاردار <span class="badge badge-free">رایگان</span></td><td><code>sim-khardar</code></td></tr>
+                        <tr><td>سیم مفتول <span class="badge badge-free">رایگان</span></td><td><code>sim-maftool</code></td></tr>
+                        <tr><td>سیم جوش <span class="badge badge-free">رایگان</span></td><td><code>simjoosh</code></td></tr>
+                        <tr><td>تبدیل <span class="badge badge-free">رایگان</span></td><td><code>tabdil</code></td></tr>
+                        <tr><td>تیرآهن لانه زنبوری <span class="badge badge-free">رایگان</span></td><td><code>tirahan-laneh-zanboori</code></td></tr>
+                        <tr><td>توری مرغی 120 <span class="badge badge-free">رایگان</span></td><td><code>toori-morghi-pressi</code></td></tr>
+                        <tr><td>ورق آلوزینک <span class="badge badge-free">رایگان</span></td><td><code>varagh-aluzink</code></td></tr>
+                        <tr><td>ورق گالوالوم <span class="badge badge-free">رایگان</span></td><td><code>varagh-galvalum</code></td></tr>
+                        <tr><td>ورق کرکره رنگی <span class="badge badge-free">رایگان</span></td><td><code>varagh-kerkereh-rangi</code></td></tr>
+                        <tr><td>ورق کرکره <span class="badge badge-free">رایگان</span></td><td><code>varagh-kerkereh</code></td></tr>
+                        <tr><td>ورق سربی <span class="badge badge-free">رایگان</span></td><td><code>varagh-sorbi</code></td></tr>
+                        <tr><td>ورق استیل <span class="badge badge-free">رایگان</span></td><td><code>varagh-steel</code></td></tr>
+                        <tr><td>وال پست <span class="badge badge-free">رایگان</span></td><td><code>wal-post</code></td></tr>
+                        <tr><td>عرشه فولادی</td><td><code>arsheh-fooladi</code></td></tr>
+                        <tr><td>بوشن</td><td><code>booshen</code></td></tr>
+                        <tr><td>چهار پهلو آهنی</td><td><code>chahar-pahloo-ahani</code></td></tr>
+                        <tr><td>الکترود</td><td><code>electrod</code></td></tr>
+                        <tr><td>فنس</td><td><code>fence</code></td></tr>
+                        <tr><td>لرزه گیر</td><td><code>larzeh-gir</code></td></tr>
+                        <tr><td>لوله API</td><td><code>looleh-api</code></td></tr>
+                        <tr><td>لوله داربست</td><td><code>looleh-darbast</code></td></tr>
+                        <tr><td>لوله درزدار</td><td><code>looleh-darzdar</code></td></tr>
+                        <tr><td>لوله گالوانیزه گلخانه</td><td><code>looleh-galvazizeh-golkhaneh</code></td></tr>
+                        <tr><td>لوله گالوانیزه</td><td><code>looleh-garvanizeh</code></td></tr>
+                        <tr><td>لوله گاز</td><td><code>looleh-gaz</code></td></tr>
+                        <tr><td>لوله جدار چاه</td><td><code>looleh-jedar-chah</code></td></tr>
+                        <tr><td>لوله مانیسمان</td><td><code>looleh-manisman</code></td></tr>
+                        <tr><td>لوله مسی</td><td><code>looleh-mesi</code></td></tr>
+                        <tr><td>لوله صنعتی</td><td><code>looleh-sanati</code></td></tr>
+                        <tr><td>لوله اسپیرال</td><td><code>looleh-spiral</code></td></tr>
+                        <tr><td>لوله استیل دکوراتیو</td><td><code>looleh-steel-decorative</code></td></tr>
+                        <tr><td>لوله استیل صنعتی</td><td><code>looleh-steel-sanati</code></td></tr>
+                        <tr><td>لوله تست آب</td><td><code>looleh-test-ab</code></td></tr>
+                        <tr><td>میلگرد آجدار</td><td><code>milgerd-ajdar</code></td></tr>
+                        <tr><td>میلگرد ساده</td><td><code>milgerd-sadeh</code></td></tr>
+                        <tr><td>میلگرد st37</td><td><code>milgerd-st37</code></td></tr>
+                        <tr><td>میلگرد استیل</td><td><code>milgerd-steel</code></td></tr>
+                        <tr><td>ناودانی</td><td><code>navdooni</code></td></tr>
+                        <tr><td>پروفیل آلومینیوم</td><td><code>profil-alminiyom</code></td></tr>
+                        <tr><td>پروفیل گالوانیزه</td><td><code>profil-galvanizeh</code></td></tr>
+                        <tr><td>پروفیل سبک</td><td><code>profil-sabok</code></td></tr>
+                        <tr><td>پروفیل ساختمانی</td><td><code>profil-sakhtemani</code></td></tr>
+                        <tr><td>پروفیل صنعتی</td><td><code>profil-sanati</code></td></tr>
+                        <tr><td>رابیتس</td><td><code>rabits</code></td></tr>
+                        <tr><td>ریل قطار</td><td><code>rail-ghatar</code></td></tr>
+                        <tr><td>شفت آهنی</td><td><code>shafte-ahani</code></td></tr>
+                        <tr><td>تخته روسی</td><td><code>takhteh-roosi</code></td></tr>
+                        <tr><td>تسمه آهنی</td><td><code>tasmeh-ahani</code></td></tr>
+                        <tr><td>تسمه مسی</td><td><code>tasmeh-mesi</code></td></tr>
+                        <tr><td>تیرآهن هاش</td><td><code>tirahan-hush</code></td></tr>
+                        <tr><td>تیرآهن</td><td><code>tirahan</code></td></tr>
+                        <tr><td>توری حصاری</td><td><code>toori-hesari</code></td></tr>
+                        <tr><td>توری پرسی</td><td><code>toori-pressi</code></td></tr>
+                        <tr><td>ورق آلومینیوم آجدار</td><td><code>varagh-alminiyom-ajdar</code></td></tr>
+                        <tr><td>ورق آلومینیوم</td><td><code>varagh-alminiyom</code></td></tr>
+                        <tr><td>ورق گالوانیزه</td><td><code>varagh-galvanizeh</code></td></tr>
+                        <tr><td>ورق قلع اندود</td><td><code>varagh-ghalandood</code></td></tr>
+                        <tr><td>ورق مسی</td><td><code>varagh-mesi</code></td></tr>
+                        <tr><td>ورق رنگی الکترواستاتیک</td><td><code>varagh-rang-electrostatic</code></td></tr>
+                        <tr><td>ورق رنگی</td><td><code>varagh-rangi</code></td></tr>
+                        <tr><td>ورق روغنی</td><td><code>varagh-roghani</code></td></tr>
+                        <tr><td>ورق استیل دکوراتیو</td><td><code>varagh-steel-decorative</code></td></tr>
+                        <tr><td>ورق استیل صنعتی</td><td><code>varagh-steel-sanati</code></td></tr>
+                        <tr><td>زانو</td><td><code>zanoo</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <!-- Error Codes -->
     <div class="card">
         <h2>کدهای خطا و وضعیت‌ها</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>وضعیت (status)</th>
-                    <th>حساب (account)</th>
-                    <th>توضیحات</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>ok</code></td>
-                    <td><code>paid</code> / <code>free</code></td>
-                    <td>درخواست موفقیت‌آمیز بود و داده‌ها (شامل لیست سایزها و قیمت‌ها) در آرایه <code>data</code> قرار دارند.</td>
-                </tr>
-                <tr>
-                    <td><code>failed</code></td>
-                    <td><code>unauthorized</code></td>
-                    <td>کلید API نامعتبر است یا ارسال نشده، در حالی که محصول درخواستی پولی است.</td>
-                </tr>
-                <tr>
-                    <td><code>failed</code></td>
-                    <td><code>expired</code></td>
-                    <td>اشتراک شما منقضی شده است و دسترسی به داده‌های پولی قطع شده است.</td>
-                </tr>
-                <tr>
-                    <td><code>failed</code></td>
-                    <td><code>blocked</code></td>
-                    <td>آدرس IP شما به دلیل نقض قوانین یا درخواست‌های مشکوک مسدود شده است.</td>
-                </tr>
-                <tr>
-                    <td><code>failed</code></td>
-                    <td>—</td>
-                    <td>شناسه محصول (<code>id</code>) اشتباه است یا فایل داده‌ای برای آن یافت نشد.</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>وضعیت (status)</th>
+                        <th>حساب (account)</th>
+                        <th>توضیحات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ok</code></td>
+                        <td><code>paid</code> / <code>free</code></td>
+                        <td>درخواست موفقیت‌آمیز بود و داده‌ها (شامل لیست سایزها و قیمت‌ها) در آرایه <code>data</code> قرار دارند.</td>
+                    </tr>
+                    <tr>
+                        <td><code>failed</code></td>
+                        <td><code>unauthorized</code></td>
+                        <td>کلید API نامعتبر است یا ارسال نشده، در حالی که محصول درخواستی پولی است.</td>
+                    </tr>
+                    <tr>
+                        <td><code>failed</code></td>
+                        <td><code>expired</code></td>
+                        <td>اشتراک شما منقضی شده است و دسترسی به داده‌های پولی قطع شده است.</td>
+                    </tr>
+                    <tr>
+                        <td><code>failed</code></td>
+                        <td><code>blocked</code></td>
+                        <td>آدرس IP شما به دلیل نقض قوانین یا درخواست‌های مشکوک مسدود شده است.</td>
+                    </tr>
+                    <tr>
+                        <td><code>failed</code></td>
+                        <td>—</td>
+                        <td>شناسه محصول (<code>id</code>) اشتباه است یا فایل داده‌ای برای آن یافت نشد.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
 </div>
 
+<script>
+    (function() {
+        const tabs = document.querySelectorAll('.code-tab-btn');
+        const contents = {
+            php: document.getElementById('tab-php'),
+            nodejs: document.getElementById('tab-nodejs'),
+            curl: document.getElementById('tab-curl'),
+            python: document.getElementById('tab-python')
+        };
+
+        function activateTab(tabId) {
+            // hide all
+            Object.values(contents).forEach(el => el.classList.remove('active'));
+            // remove active class from buttons
+            tabs.forEach(btn => btn.classList.remove('active'));
+            // show selected
+            if (contents[tabId]) contents[tabId].classList.add('active');
+            // add active class to clicked button
+            const activeBtn = Array.from(tabs).find(btn => btn.dataset.tab === tabId);
+            if (activeBtn) activeBtn.classList.add('active');
+        }
+
+        tabs.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const tabId = this.dataset.tab;
+                if (tabId) activateTab(tabId);
+            });
+        });
+
+        // activate first tab by default (already active in html)
+        // but ensure content matches
+        const defaultActive = document.querySelector('.code-tab-btn.active');
+        if (defaultActive) {
+            const tabId = defaultActive.dataset.tab;
+            if (tabId && contents[tabId]) {
+                Object.values(contents).forEach(el => el.classList.remove('active'));
+                contents[tabId].classList.add('active');
+            }
+        } else {
+            // fallback: activate php
+            activateTab('php');
+        }
+    })();
+</script>
 </body>
 </html>
