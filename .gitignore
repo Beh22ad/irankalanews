@@ -1,0 +1,5 @@
+.env
+data/password_resets.json
+data/admins.json
+data/orders.json
+data/users.json

@@ -1,0 +1,9 @@
+# مسدود کردن تمام دسترسی‌ها
+
+Deny from all
+
+# حتی اگر mod_access غیرفعال بود
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>

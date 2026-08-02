@@ -1,0 +1,13 @@
+Options -Indexes
+
+<FilesMatch "\.php$">
+    SetHandler application/x-httpd-php
+</FilesMatch>
+
+<FilesMatch "\.(jpe?g|png|gif|webp|css|js|woff2?)$">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>

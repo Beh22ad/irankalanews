@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "title": "مستندات API قیمت آهن",
+    "slug": "iron-api",
+    "description": "دریافت قیمت روز آهن و مقاطع فولادی",
+    "created_at": "2025-01-01 00:00:00",
+    "updated_at": "2025-01-01 00:00:00",
+    "status": "published"
+  }
+]

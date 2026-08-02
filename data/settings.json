@@ -1,0 +1,22 @@
+{
+    "site_description": "سرویس تخصصی ارائه قیمت به روز کالاهای بازار به صورت API",
+    "telegram_username": "",
+    "telegram_url": "https:\/\/t.me\/sprt_mrs_h",
+    "rubika_url": "https:\/\/rubika.ir\/hshn1371",
+    "footer_links": [
+        {
+            "label": "محصولات",
+            "url": "\/products"
+        },
+        {
+            "label": "قوانین خرید",
+            "url": "\/pages\/shid-rules.php"
+        },
+        {
+            "label": "تماس با ما",
+            "url": "\/pages\/contact-us.php"
+        }
+    ],
+    "copyright_text": "© کلیه حقوق این پلتفرم محفوظ و متعلق به ایران کالانیوز می باشد."
+
+}

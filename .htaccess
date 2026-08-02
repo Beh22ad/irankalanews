@@ -1,0 +1,49 @@
+Options -MultiViews
+RewriteEngine On
+Options -Indexes
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# رفع 403/404 برای trailing slash
+
+RewriteRule ^products/$ products.php [L]
+RewriteRule ^doc/$ doc.php [L]
+
+# صفحه تکی محصول
+
+RewriteRule ^product/(.+)$ product.php?slug=$1 [L,QSA]
+
+# صفحات عمومی
+
+RewriteRule ^products$ products.php [L]
+RewriteRule ^login$ login.php [L]
+RewriteRule ^register$ register.php [L]
+RewriteRule ^dashboard$ dashboard.php [L]
+RewriteRule ^orders$ orders.php [L]
+RewriteRule ^purchase$ purchase.php [L]
+RewriteRule ^doc$ doc.php [L]
+RewriteRule ^logout$ logout.php [L]
+RewriteRule ^forgot-password$ forgot-password.php [L]
+RewriteRule ^reset-password$ reset-password.php [L]
+
+# صفحات ادمین
+
+RewriteRule ^admin$ admin/index.php [L]
+RewriteRule ^admin/sitemap$ admin/sitemap.php [L]
+RewriteRule ^admin/login$ admin/login.php [L]
+RewriteRule ^admin/logout$ admin/logout.php [L]
+RewriteRule ^admin/orders$ admin/orders.php [L]
+RewriteRule ^admin/users$ admin/users.php [L]
+RewriteRule ^admin/products$ admin/products.php [L]
+RewriteRule ^admin/plans$ admin/plans.php [L]
+RewriteRule ^admin/posts$ admin/posts.php [L]
+RewriteRule ^admin/settings$ admin/settings.php [L]
+
+# امنیت
+
+<FilesMatch "^\.">
+Deny from all
+</FilesMatch>
+RedirectMatch 403 /data/
+AddDefaultCharset UTF-8
